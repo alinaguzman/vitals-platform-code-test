@@ -4,7 +4,8 @@ module Award
       'NORMAL ITEM' => 'NormalAward',
       'Blue First' => 'BlueFirst',
       'Blue Distinction Plus' => 'BluePlus',
-      'Blue Compare' => 'BlueCompare'
+      'Blue Compare' => 'BlueCompare',
+      'Blue Star' => 'BlueStar'
   }
 
   def self.new(name, expires_in, quality)
@@ -73,6 +74,18 @@ class BlueCompare < NormalAward
       @quality = [@quality += 2, 50].min
     elsif @expires_in < 6
       @quality = [@quality += 3, 50].min
+    end
+  end
+
+end
+
+class BlueStar < NormalAward
+
+  def calculate_quality
+    if @expires_in > 0
+      @quality = [@quality -= 2, 0].max
+    else
+      @quality = [@quality -= 4, 0].max
     end
   end
 
